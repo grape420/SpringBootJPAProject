@@ -1,0 +1,6 @@
+<footer th:fragment="footer" class="text-center fixed-bottom bg-light py-2 shadow-sm border-top">
+  <p class="mb-0 small text-muted">
+    &copy; 2025 My Board App |
+    <span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm')}"></span>
+  </p>
+</footer>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 수정</title>
+</head>
+<body>
+<h1>회원 수정</h1>
+  <form method="post" th:action="@{/edit}">
+    <input type="hidden" name="id" th:value="${member.id}" />
+    <input type="text" name="name" th:value="${member.name}" />
+    <input type="email" name="email" th:value="${member.email}" />
+    <button type="submit">수정</button>
+  </form>
+</body>
+</html>

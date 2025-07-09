@@ -1,0 +1,62 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<main layout:fragment="content">
+    <div>
+        <h2 class="mb-3">게시글 목록</h2>
+        <a href="/posts/new" class="btn btn-primary mb-3">새 글 작성</a>
+
+        <form method="get" id="search-form" th:action="@{/posts}" class="mb-3">
+            <div class="row g-2 align-items-center">
+                <!-- 🔍 검색 조건 -->
+                <div class="col-auto" style="flex: 0 0 120px;">
+                    <select class="form-select" id="searchType" name="searchType">
+                        <option value="all" th:selected="${postDTO.searchType == 'all'}">전체</option>
+                        <option value="title" th:selected="${postDTO.searchType == 'title'}">제목</option>
+                        <option value="content" th:selected="${postDTO.searchType == 'content'}">내용</option>
+                        <option value="author" th:selected="${postDTO.searchType == 'author'}">작성자</option>
+                    </select>
+                </div>
+
+                <!-- 🔤 검색어 입력 -->
+                <div class="col" style="flex: 1;">
+                    <input type="text" class="form-control" id="keyword" name="keyword"
+                           placeholder="검색어 입력"
+                           th:value="${postDTO.keyword}" />
+                </div>
+
+                <!-- 🗓 작성일 시작 -->
+                <div class="col-auto">
+                    <input type="date" class="form-control" id="startDate" name="startDate"
+                           th:value="${postDTO.startDate}" />
+                </div>
+
+                <!-- 🗓 작성일 종료 -->
+                <div class="col-auto">
+                    <input type="date" class="form-control" id="endDate" name="endDate"
+                           th:value="${postDTO.endDate}" />
+                </div>
+
+                <!-- 🔢 페이지 크기 -->
+                <div class="col-auto" style="flex: 0 0 100px;">
+                    <select class="form-select" id="pageSize" name="pageSize">
+                        <option th:value="5" th:selected="${postDTO.pageSize == 5}">5개</option>
+                        <option th:value="10" th:selected="${postDTO.pageSize == 10}">10개</option>
+                        <option th:value="20" th:selected="${postDTO.pageSize == 20}">20개</option>
+                    </select>
+                </div>
+
+                <!-- 🔘 검색 버튼 -->
+                <div class="col-auto">
+                    <button type="button" class="btn btn-outline-secondary ms-2" onclick="resetSearch()">초기화</button>
+                    <button class="btn btn-outline-secondary" type="submit">검색</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- 🔸 게시글 출력 영역 -->
+        <div id="post-table-wrapper"></div>
+    </div>
+</main>
+</html>

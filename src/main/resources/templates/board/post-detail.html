@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <title>게시글 상세</title>
+</head>
+<body>
+
+<!-- 📌 본문 fragment -->
+<div layout:fragment="content" class="container py-4">
+
+  <h2 th:text="${post.title}">제목</h2>
+
+  <p class="text-muted">
+    작성자: <span th:text="${post.author}">작성자</span> |
+    작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</span>
+  </p>
+
+  <hr />
+
+  <p th:text="${post.content}">본문</p>
+
+  <div class="mt-4">
+    <a href="/posts" class="btn btn-secondary">목록</a>
+    <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">수정</a>
+  </div>
+
+</div>
+
+</body>
+</html>
