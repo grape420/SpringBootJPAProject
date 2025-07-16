@@ -1,31 +1,43 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-<head>
-  <title>게시글 상세</title>
-</head>
-<body>
 
-<!-- 📌 본문 fragment -->
-<div layout:fragment="content" class="container py-4">
+  <!-- 📌 본문 fragment -->
+  <div layout:fragment="content" class="container py-4" th:data-post-id="${post.id}" id="post-detail">
 
-  <h2 th:text="${post.title}">제목</h2>
+    <h2 th:text="${post.title}">제목</h2>
 
-  <p class="text-muted">
-    작성자: <span th:text="${post.author}">작성자</span> |
-    작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</span>
-  </p>
+    <p class="text-muted">
+      작성자: <span th:text="${post.author}">작성자</span> |
+      작성일: <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</span>
+    </p>
 
-  <hr />
+    <hr />
 
-  <p th:text="${post.content}">본문</p>
+    <p th:text="${post.content}">본문</p>
 
-  <div class="mt-4">
-    <a href="/posts" class="btn btn-secondary">목록</a>
-    <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">수정</a>
+    <div class="mt-4">
+      <a href="/posts" class="btn btn-secondary">목록</a>
+      <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="btn btn-primary">수정</a>
+    </div>
+
+    <!-- 게시글 본문 ... -->
+
+    <!-- 댓글 영역 (비어있음, ajax로 채움) -->
+    <div class="mt-4" id="comment-section">
+      <h5>댓글</h5>
+      <ul id="comment-list" class="list-group mb-3"></ul>
+      <!-- 댓글 작성 폼 (아래 JS에서 submit로 처리) -->
+      <form id="comment-form" class="mb-2">
+        <input type="text" name="author" placeholder="작성자" class="form-control mb-2" required />
+        <textarea name="content" rows="2" class="form-control mb-2" placeholder="댓글을 입력하세요." required></textarea>
+        <button type="submit" class="btn btn-primary btn-sm">댓글 등록</button>
+      </form>
+    </div>
+
   </div>
 
-</div>
-
-</body>
+  <div layout:fragment="script">
+    <script defer th:src="@{/js/post-detail.js}"></script>
+  </div>
 </html>

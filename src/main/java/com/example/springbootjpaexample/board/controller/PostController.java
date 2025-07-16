@@ -2,6 +2,7 @@ package com.example.springbootjpaexample.board.controller;
 
 import com.example.springbootjpaexample.board.dto.PostDTO;
 import com.example.springbootjpaexample.board.entity.Post;
+import com.example.springbootjpaexample.board.service.CommentService;
 import com.example.springbootjpaexample.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
+
+    private final CommentService commentService;
 
     /* 목록 */
     @GetMapping
@@ -44,6 +47,7 @@ public class PostController {
     public String detail(@PathVariable Long id, Model model) {
         PostDTO postDTO = postService.findById(id);
         model.addAttribute("post", postDTO);
+
         return "board/post-detail";
     }
 

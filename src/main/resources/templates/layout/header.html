@@ -1,13 +1,36 @@
-<header th:fragment="header">
+<header th:fragment="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary rounded px-4 mb-4">
     <div class="container-fluid">
       <a class="navbar-brand fw-bold" href="/">📝 MyBoard</a>
-      <div class="collapse navbar-collapse">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" href="/posts">게시판</a>
           </li>
-          <!-- 필요 시 메뉴 추가 -->
+        </ul>
+        <!-- 로그인/로그아웃 영역 -->
+        <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
+          <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>
+              <span th:text="${#authentication.principal.attributes['response']['name']} + 님"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+              <li><a class="dropdown-item" th:href="@{/logout}">로그아웃</a></li>
+              <!-- 향후 마이페이지 등 추가 메뉴 가능 -->
+            </ul>
+          </li>
+          <li class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" th:href="@{/login}">로그인</a>
+          </li>
+          <li class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" th:href="@{/signup}">회원가입</a>
+          </li>
         </ul>
       </div>
     </div>

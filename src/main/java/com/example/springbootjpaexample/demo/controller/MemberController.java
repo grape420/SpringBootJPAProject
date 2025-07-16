@@ -5,18 +5,15 @@ import com.example.springbootjpaexample.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("members", memberService.findAll());
         return "members";
@@ -25,7 +22,7 @@ public class MemberController {
     @PostMapping("/add")
     public String add(MemberDTO memberDTO) {
         memberService.save(memberDTO);
-        return "redirect:/";
+        return "redirect:/member";
     }
 
     @GetMapping("/edit/{id}")
@@ -38,7 +35,7 @@ public class MemberController {
     @PostMapping("/edit")
     public String edit(@ModelAttribute MemberDTO dto) {
         memberService.updateMember(dto);
-        return "redirect:/";
+        return "redirect:/member";
     }
 
 }
